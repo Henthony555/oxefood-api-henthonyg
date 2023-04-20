@@ -45,6 +45,8 @@ public class EntregadorRequest {
 
     private String enderecoUf;
 
+    private String enderecoComplemento;
+
     private Boolean ativo;
 
    public Entregador build() {
@@ -63,6 +65,7 @@ public class EntregadorRequest {
                .enderecoCidade(enderecoCidade)
                .enderecoCep(enderecoCep)
                .enderecoUf(enderecoUf)
+               .enderecoComplemento(enderecoComplemento)
                .ativo(ativo)
                .build();
    }
