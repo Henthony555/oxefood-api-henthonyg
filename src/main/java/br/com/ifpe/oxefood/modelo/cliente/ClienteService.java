@@ -12,41 +12,48 @@ import br.com.ifpe.oxefood.util.entity.GenericService;
 @Service
 public class ClienteService extends GenericService {
 
-   @Autowired
-   private ClienteRepository repository;
+     @Autowired
+     private ClienteRepository repository;
 
-   @Transactional
-   public Cliente save(Cliente cliente) {
+     @Transactional
+     public Cliente save(Cliente cliente) {
 
-       super.preencherCamposAuditoria(cliente);
-       return repository.save(cliente);
-   }
+          super.preencherCamposAuditoria(cliente);
+          return repository.save(cliente);
+     }
 
-   @Transactional
-   public void update(Long id, Cliente clienteAlterado) {
+     @Transactional
+     public void update(Long id, Cliente clienteAlterado) {
 
-      Cliente cliente = repository.findById(id).get();
-      cliente.setNome(clienteAlterado.getNome());
-      cliente.setDataNascimento(clienteAlterado.getDataNascimento());
-      cliente.setCpf(clienteAlterado.getCpf());
-      cliente.setFoneCelular(clienteAlterado.getFoneCelular());
-      cliente.setFoneFixo(clienteAlterado.getFoneFixo());
-	    
-      super.preencherCamposAuditoria(cliente);
-      repository.save(cliente);
-  }
+          Cliente cliente = repository.findById(id).get();
+          cliente.setNome(clienteAlterado.getNome());
+          cliente.setDataNascimento(clienteAlterado.getDataNascimento());
+          cliente.setCpf(clienteAlterado.getCpf());
+          cliente.setFoneCelular(clienteAlterado.getFoneCelular());
+          cliente.setFoneFixo(clienteAlterado.getFoneFixo());
 
+          super.preencherCamposAuditoria(cliente);
+          repository.save(cliente);
+     }
 
-   public List<Cliente> listarTodos() {
-  
-        return repository.findAll();
-   }
+     @Transactional
+     public void delete(Long id) {
 
-   public Cliente obterPorID(Long id) {
+          Cliente cliente = repository.findById(id).get();
+          cliente.setHabilitado(Boolean.FALSE);
+          super.preencherCamposAuditoria(cliente);
 
-        return repository.findById(id).get();
-   }
+          repository.save(cliente);
+     }
 
+     public List<Cliente> listarTodos() {
+
+          return repository.findAll();
+     }
+
+     public Cliente obterPorID(Long id) {
+
+          return repository.findById(id).get();
+     }
 
 }
-
