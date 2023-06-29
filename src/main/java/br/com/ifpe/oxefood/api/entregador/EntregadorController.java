@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import br.com.ifpe.oxefood.modelo.entregador.EntregadorService;
 import br.com.ifpe.oxefood.util.entity.GenericController;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/entregador")
@@ -27,6 +30,7 @@ public class EntregadorController extends GenericController {
     @Autowired
     private EntregadorService entregadorService;
 
+    @ApiOperation(value = "Serviço responsável por salvar um cliente no sistema.")
     @PostMapping
     public ResponseEntity<Entregador> save(@RequestBody @Valid EntregadorRequest request) {
 
@@ -34,12 +38,21 @@ public class EntregadorController extends GenericController {
         return new ResponseEntity<Entregador>(entregador, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Serviço responsável por listar todos os clientes do sistema.")
     @GetMapping
     public List<Entregador> listarTodos() {
 
         return entregadorService.listarTodos();
     }
 
+    @ApiOperation(value = "Serviço responsável por obter um cliente referente ao Id passado na URL.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna  o cliente."),
+            @ApiResponse(code = 401, message = "Acesso não autorizado."),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
+            @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
+            @ApiResponse(code = 500, message = "Foi gerado um erro no servidor."),
+    })
     @GetMapping("/{id}")
     public Entregador obterPorID(@PathVariable Long id) {
 
